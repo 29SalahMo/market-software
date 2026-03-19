@@ -7,6 +7,7 @@ import { ProductsPage } from './components/ProductsPage';
 import { CustomersPage } from './components/CustomersPage';
 import { PosPage } from './components/PosPage';
 import { ReportsPage } from './components/ReportsPage';
+import { LandingPage } from './components/LandingPage';
 
 interface UserInfo {
   id: string;
@@ -63,6 +64,8 @@ function AppShell({ token, user, onLogout }: { token: string; user: UserInfo; on
 function App() {
   const { i18n } = useTranslation();
   const [token, setToken] = useState<string | null>(localStorage.getItem('esms_token'));
+  const [demoEmail, setDemoEmail] = useState('');
+  const [demoPassword, setDemoPassword] = useState('');
   const [user, setUser] = useState<UserInfo | null>(() => {
     const raw = localStorage.getItem('esms_user');
     if (!raw) return null;
@@ -101,8 +104,20 @@ function App() {
             <button type="button" onClick={() => i18n.changeLanguage('ar')}>العربية</button>
           </div>
         </header>
-        <main style={{ padding: '2rem' }}>
-          <LoginForm onSuccess={handleLogin} />
+        <main style={{ padding: '1rem 1rem 2rem' }}>
+          <LandingPage
+            onTryDemo={() => {
+              setDemoEmail('admin@esms.local');
+              setDemoPassword('Admin@123');
+            }}
+          />
+          <div style={{ maxWidth: 460, margin: '0 auto', padding: '1rem', background: 'rgba(15,23,42,0.9)', border: '1px solid var(--color-border)', borderRadius: 16 }}>
+            <LoginForm
+              onSuccess={handleLogin}
+              initialEmail={demoEmail}
+              initialPassword={demoPassword}
+            />
+          </div>
         </main>
       </div>
     );

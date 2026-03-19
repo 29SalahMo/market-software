@@ -1,15 +1,27 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { getApiBase } from '../api';
 
-type Props = { onSuccess: (token: string, user: any) => void };
+type Props = {
+  onSuccess: (token: string, user: any) => void;
+  initialEmail?: string;
+  initialPassword?: string;
+};
 
-export function LoginForm({ onSuccess }: Props) {
+export function LoginForm({ onSuccess, initialEmail = '', initialPassword = '' }: Props) {
   const { t } = useTranslation();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState(initialEmail);
+  const [password, setPassword] = useState(initialPassword);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setEmail(initialEmail);
+  }, [initialEmail]);
+
+  useEffect(() => {
+    setPassword(initialPassword);
+  }, [initialPassword]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

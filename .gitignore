@@ -7,6 +7,9 @@ node_modules/
 dist/
 build/
 *.local
+*.tsbuildinfo
+frontend/vite.config.js
+frontend/vite.config.d.ts
 
 # Environment
 .env

@@ -2,7 +2,6 @@ import argon2 from 'argon2';
 import jwt from 'jsonwebtoken';
 import { randomUUID } from 'crypto';
 import {
-  getBranchById,
   getTenantById,
   getUserByEmail,
   seedDemoTenant,
@@ -10,8 +9,8 @@ import {
 } from '../memoryStore.js';
 
 const JWT_SECRET = process.env.JWT_SECRET ?? 'change-me-in-production';
-const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN ?? '15m';
-const REFRESH_EXPIRES_IN = process.env.REFRESH_EXPIRES_IN ?? '7d';
+const JWT_EXPIRES_IN = (process.env.JWT_EXPIRES_IN ?? '15m') as jwt.SignOptions['expiresIn'];
+const REFRESH_EXPIRES_IN = (process.env.REFRESH_EXPIRES_IN ?? '7d') as jwt.SignOptions['expiresIn'];
 
 let demoSeeded = false;
 let authService: AuthService | null = null;

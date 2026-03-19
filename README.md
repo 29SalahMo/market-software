@@ -79,7 +79,7 @@ market-software/
 
 ---
 
-## 🚀 Quick Start (when implemented)
+## 🚀 Quick Start
 
 ```bash
 # With Docker
@@ -87,8 +87,41 @@ docker-compose up -d
 
 # Or local dev
 cd backend && npm install && npm run dev
-cd frontend && npm install && npm start
+cd frontend && npm install && npm run dev
 ```
+
+---
+
+## 🌐 Publish For Public Access
+
+To let users open one URL and try the system:
+
+1. Deploy the backend API.
+2. Deploy the frontend app.
+3. Connect frontend to backend with `VITE_API_BASE_URL`.
+
+### Backend deployment (Render example)
+
+- Create a new **Web Service** from this repo.
+- Root directory: `backend`
+- Build command: `npm install && npm run build`
+- Start command: `npm start`
+- Add environment variables:
+  - `NODE_ENV=production`
+  - `PORT=3000`
+  - `JWT_SECRET=<your-strong-secret>`
+  - `CORS_ORIGIN=<your-frontend-url>`
+
+### Frontend deployment (Vercel example)
+
+- Import this repo in Vercel.
+- Root directory: `frontend`
+- Framework preset: `Vite`
+- Add env var:
+  - `VITE_API_BASE_URL=https://<your-backend-domain>`
+- Deploy.
+
+After deployment, users can open your Vercel link, click **Try Demo Now**, and test the system.
 
 ---
 
