@@ -17,6 +17,9 @@ interface UserInfo {
   branchId: string | null;
 }
 
+const routerBasename =
+  import.meta.env.BASE_URL === '/' ? undefined : import.meta.env.BASE_URL.replace(/\/$/, '');
+
 function AppShell({ token, user, onLogout }: { token: string; user: UserInfo; onLogout: () => void }) {
   const { i18n } = useTranslation();
   const isRtl = i18n.language === 'ar';
@@ -24,7 +27,7 @@ function AppShell({ token, user, onLogout }: { token: string; user: UserInfo; on
   document.documentElement.dir = isRtl ? 'rtl' : 'ltr';
 
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={routerBasename}>
       <div className="app" style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
         <header style={{ padding: '1rem 1.5rem', background: 'var(--color-surface)', borderBottom: '1px solid #e5e7eb', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <h1 style={{ margin: 0, fontSize: '1.25rem' }}>ESMS — Egypt Supermarket Management System</h1>

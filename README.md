@@ -111,6 +111,17 @@ The repo includes a root `vercel.json` that deploys **both** the Vite frontend a
 
 Leave `VITE_API_BASE_URL` unset on Vercel — the frontend calls the API on the same domain via rewrites.
 
+### GitHub Pages (optional mirror)
+
+If GitHub Actions shows **pages build and deployment** failures, switch Pages to the custom workflow:
+
+1. Open **GitHub → Settings → Pages**
+2. Under **Build and deployment → Source**, choose **GitHub Actions** (not “Deploy from a branch”)
+3. The **Deploy GitHub Pages** workflow builds the Vite app and publishes to `https://29salahmo.github.io/market-software/`
+4. GitHub Pages uses the Vercel API (`VITE_API_BASE_URL`) for login and data
+
+The old default Jekyll deploy only published the README and often fails on `deploy-pages` — disable branch-based Pages once Actions is selected.
+
 ### Split deployment (optional)
 
 #### Backend on Render
