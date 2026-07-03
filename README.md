@@ -94,34 +94,41 @@ cd frontend && npm install && npm run dev
 
 ## 🌐 Publish For Public Access
 
-To let users open one URL and try the system:
+The repo includes a root `vercel.json` that deploys **both** the Vite frontend and the Express API on one Vercel project (e.g. [market-software.vercel.app](https://market-software.vercel.app)).
 
-1. Deploy the backend API.
-2. Deploy the frontend app.
-3. Connect frontend to backend with `VITE_API_BASE_URL`.
+### Vercel deployment (recommended — frontend + API)
 
-### Backend deployment (Render example)
+1. Import [github.com/29SalahMo/market-software](https://github.com/29SalahMo/market-software) in Vercel.
+2. **Root Directory:** leave empty (repo root). Do **not** set it to `frontend` — the root config builds everything.
+3. **Framework Preset:** Other (auto-detected from `vercel.json`).
+4. **Output Directory:** leave empty (set in `vercel.json` as `frontend/dist`).
+5. Add environment variables in Vercel → Settings → Environment Variables:
+   - `JWT_SECRET` = a long random secret (32+ characters)
+   - `CORS_ORIGIN` = `https://market-software.vercel.app` (your Vercel URL)
+6. Deploy. The site serves the React app; `/v1/*` and `/health` route to the serverless API.
 
-- Create a new **Web Service** from this repo.
+**Demo login:** `admin@esms.local` / `Admin@123`
+
+Leave `VITE_API_BASE_URL` unset on Vercel — the frontend calls the API on the same domain via rewrites.
+
+### Split deployment (optional)
+
+#### Backend on Render
+
 - Root directory: `backend`
 - Build command: `npm install && npm run build`
 - Start command: `npm start`
-- Add environment variables:
+- Environment variables:
   - `NODE_ENV=production`
   - `PORT=3000`
   - `JWT_SECRET=<your-strong-secret>`
   - `CORS_ORIGIN=<your-frontend-url>`
 
-### Frontend deployment (Vercel example)
+#### Frontend only on Vercel
 
-- Import this repo in Vercel.
 - Root directory: `frontend`
 - Framework preset: `Vite`
-- Add env var:
-  - `VITE_API_BASE_URL=https://<your-backend-domain>`
-- Deploy.
-
-After deployment, users can open your Vercel link, click **Try Demo Now**, and test the system.
+- Add env var: `VITE_API_BASE_URL=https://<your-backend-domain>`
 
 ---
 
